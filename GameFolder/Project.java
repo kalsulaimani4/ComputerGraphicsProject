@@ -1,5 +1,7 @@
+
+  
 /*
- * To change this license header, choose License Headers in Project Properties.
+ * To change this license header, choose License Headers in CatchGame Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -12,12 +14,12 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
 
-public class Project extends JFrame {
+public class CatchGame extends JFrame {
 
     private static final int FRAME_WIDTH = 800; // frame-width
     private static final int FRAME_HEIGHT = 800; // frame-height
 
-    public Project() {
+    public CatchGame() {
         setLayout(new BorderLayout()); // layout of frame
         setSize(FRAME_WIDTH, FRAME_HEIGHT);                // set width & height of frame
         setTitle("The Game");
@@ -34,7 +36,7 @@ public class Project extends JFrame {
 
     public static void main(String[] args) {
 
-        new Project();
+        new CatchGame();
     }
 
 }
@@ -44,8 +46,8 @@ class DrawingPanel extends JPanel implements Runnable {
     private static int PANEL_WIDTH; // panel width
     private static int PANEL_HEIGHT; // panel height
 
-    private static final int RW = 60;
-    private static final int RH = 40;
+    private static final int RW = 50;
+    private static final int RH = 50;
 
     //int x, y;
     Thread mythread;
@@ -77,6 +79,8 @@ class DrawingPanel extends JPanel implements Runnable {
     public int counter = 0;
     private static int tx = 10;     // tranlsation distances along x-axis
     private static int ty = tx;     // tranlsation distances along y-axis
+    
+    
 
     public DrawingPanel(int FRAME_WIDTH, int FRAME_HEIGHT) {
 
@@ -101,6 +105,13 @@ class DrawingPanel extends JPanel implements Runnable {
             int m = PANEL_WIDTH - RW;
             x[i] = (int) (Math.random() * (m));
             y[i] = (int) (Math.random() * (m));
+        }
+        
+        for (int i = 0; i < NumOfRect; i++) {
+
+            xmovement[i] = (int) (Math.random() * 50);
+            ymovement[i] = (int) (Math.random() * 50);
+
         }
 
     }
@@ -132,12 +143,7 @@ class DrawingPanel extends JPanel implements Runnable {
         }
         int m = PANEL_WIDTH - RW;
 
-        for (int i = 0; i < NumOfRect; i++) {
-
-            xmovement[i] = 5;
-            ymovement[i] = 5;
-
-        }
+        
     }
 
     @Override
@@ -154,20 +160,15 @@ class DrawingPanel extends JPanel implements Runnable {
             }
 
             for (int i = 0; i < NumOfRect; i++) {
-
-                if ((x[i] >= PANEL_WIDTH - RW || x[i] < 0) || (y[i] >= PANEL_HEIGHT - RH || y[i] < 0)) {
-
-                    turn++;
-                    
+                x[i] = x[i] + xmovement[i];
+                y[i] = y[i] + ymovement[i];
+                
+                if(x[i] > PANEL_WIDTH-RW || x[i] < 0)
+                {
+                    xmovement[i] = -xmovement[i];
                 }
-
-                if (turn%2 == 1) {
-                    x[i] = x[i] - xmovement[i];
-                    y[i] = y[i] - ymovement[i];
-                }
-                if (turn%2 == 0) {
-                    x[i] = x[i] + xmovement[i];
-                    y[i] = y[i] + ymovement[i];
+                if(y[i] > PANEL_HEIGHT - RH || y[i] < 0){
+                    ymovement[i] = -ymovement[i];
                 }
             }
             repaint();
