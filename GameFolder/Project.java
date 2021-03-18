@@ -5,14 +5,12 @@
  */
 package GameFolder;
 
-mport java.io.*;
+import java.io.*;
 import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
-
-
 
 public class Project extends JFrame {
 
@@ -107,6 +105,7 @@ class DrawingPanel extends JPanel implements Runnable {
 
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
@@ -143,26 +142,33 @@ class DrawingPanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
+
+        int turn = 0; // turn chnages when we hit border intial 1 so we increment if it hits border we derement till we reacth the border again
+
         // animation loop
         boolean flag = true;
         while (flag) {
             try {
-                Thread.sleep(200);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
             }
 
             for (int i = 0; i < NumOfRect; i++) {
-                
 
-                if ((x[i] > PANEL_WIDTH - RW || x[i] < 0) || (y[i] > PANEL_HEIGHT - RH || y[i] < 0)) {
-                    xmovement[i] = -xmovement[i];
-                    ymovement[i] = -ymovement[i];
+                if ((x[i] >= PANEL_WIDTH - RW || x[i] < 0) || (y[i] >= PANEL_HEIGHT - RH || y[i] < 0)) {
 
-                } 
+                    turn++;
+                    
+                }
+
+                if (turn%2 == 1) {
+                    x[i] = x[i] - xmovement[i];
+                    y[i] = y[i] - ymovement[i];
+                }
+                if (turn%2 == 0) {
                     x[i] = x[i] + xmovement[i];
                     y[i] = y[i] + ymovement[i];
-                
-
+                }
             }
             repaint();
         }
