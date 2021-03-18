@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package project;
+package GameFolder;
 
-import java.io.*;
+mport java.io.*;
 import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
+
+
 
 public class Project extends JFrame {
 
@@ -80,7 +82,6 @@ class DrawingPanel extends JPanel implements Runnable {
 
     public DrawingPanel(int FRAME_WIDTH, int FRAME_HEIGHT) {
 
-
         PANEL_WIDTH = FRAME_WIDTH;
         PANEL_HEIGHT = FRAME_HEIGHT;
 
@@ -97,6 +98,12 @@ class DrawingPanel extends JPanel implements Runnable {
         // register keyboard listener
         KeyPressListener listenerKey = new KeyPressListener();
         addKeyListener(listenerKey);
+
+        for (int i = 0; i < NumOfRect; i++) {
+            int m = PANEL_WIDTH - RW;
+            x[i] = (int) (Math.random() * (m));
+            y[i] = (int) (Math.random() * (m));
+        }
 
     }
 
@@ -117,22 +124,21 @@ class DrawingPanel extends JPanel implements Runnable {
 
             g2.setColor(Color.green);
 
-	//rec = new Rectangle2D.Double(x, y, RW, RH);
+            //rec = new Rectangle2D.Double(x, y, RW, RH);
         }
         for (int i = 0; i < NumOfRect; i++) {
             rec[i] = new Rectangle(x[i], y[i], RW, RH);
             g2.fill(rec[i]);
 
         }
-        int m=PANEL_WIDTH-RW;
-        
-        for(int i=0;i<NumOfRect;i++){
-        x[i]=(int)(Math.random()*(m));
-        y[i]=(int)(Math.random()*(m));
-        xmovement[i]=(int)(Math.random());;
-        xmovement[i]=(int)(Math.random());;
-        
-    }
+        int m = PANEL_WIDTH - RW;
+
+        for (int i = 0; i < NumOfRect; i++) {
+
+            xmovement[i] = 5;
+            ymovement[i] = 5;
+
+        }
     }
 
     @Override
@@ -145,25 +151,22 @@ class DrawingPanel extends JPanel implements Runnable {
             } catch (InterruptedException e) {
             }
 
-            
-
-            
-            
             for (int i = 0; i < NumOfRect; i++) {
-                x[i] = x[i] + xmovement[i];
-                y[i] = y[i] + ymovement[i];
+                
+
                 if ((x[i] > PANEL_WIDTH - RW || x[i] < 0) || (y[i] > PANEL_HEIGHT - RH || y[i] < 0)) {
                     xmovement[i] = -xmovement[i];
                     ymovement[i] = -ymovement[i];
 
-                }
+                } 
+                    x[i] = x[i] + xmovement[i];
+                    y[i] = y[i] + ymovement[i];
                 
 
             }
             repaint();
         }
     }
-
 
     // inner class to handle keyboard events
     private class KeyPressListener extends KeyAdapter {
