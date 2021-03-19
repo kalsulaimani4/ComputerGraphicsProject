@@ -12,10 +12,7 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
 
-/**
- *
- * @author alsul
- */
+
 public class CatchGame extends JFrame {
 
     private static final int FRAME_WIDTH = 800; // frame-width
