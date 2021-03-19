@@ -110,7 +110,6 @@ class DrawingPanel extends JPanel implements Runnable {
         }
 
     }
-
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -137,7 +136,6 @@ class DrawingPanel extends JPanel implements Runnable {
             g2.fill(rec[i]);
 
         }
-
     }
     @Override
     public void run() {
@@ -149,7 +147,6 @@ class DrawingPanel extends JPanel implements Runnable {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
             }
-
             for (int i = 0; i < NumOfRect; i++) {
                 x[i] = x[i] + xmovement[i];
                 y[i] = y[i] + ymovement[i];
